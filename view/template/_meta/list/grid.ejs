@@ -1,0 +1,74 @@
+<!-- report/_meta/list/grid -->
+<%
+const extraData = extraMeta.getData(meta.report);
+data = {
+    key: meta.report.getKey(),
+    multiple: false,
+    order: meta.report.data.order || {[meta.report.getKey()]: -1},
+    columns: extraData.columns,
+    list: `report/data/list?n=${meta.node.id}`,
+    filter: {url: `report/data/filter?r=${meta.report.id}`},
+    showTop: true,
+    jam: 'ReportList',
+    ...data
+};
+%>
+<div class="jmodal-scroll-container box" data-title="<%= blocks.title %>">
+    <div class="box-header with-border scroll-header">
+        <div class="list-commands clearfix">
+            <button data-command="reload" class="btn btn-default" type="button" title="Reload">
+                <span class="fa fa-redo-alt"></span>
+            </button>
+        </div>
+    </div>
+    <div class="scroll-body box-body">
+        <div class="data-grid"
+             data-jam="<%- data.jam %>"
+             data-owner-id="{{ownerId}}"
+             data-params="<%= JSON.stringify(data) %>">
+            <% if (extraData.searchColumns.length) { %>
+            <div class="list-filter">
+                <div class="text-center"><i class="fa fa-spinner fa-spin"></i></div>
+            </div>
+            <% } if (data.showTop) { %>
+            <div class="row-top row">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="data-grid-common-search">
+                        <input type="search" class="form-control" placeholder="Search...">
+                        <span class="clear" title="Clear">&times;</span>
+                        <span class="advanced-toggle glyphicon glyphicon-cog" title="Advanced search"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-8 col-lg-9">
+                    <div class="data-grid-tuner">
+                        <button type="button" class="toggle btn btn-default">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </button>
+                    </div>
+                    <div class="data-grid-page-size hidden">
+                        <select class="form-control" title="Page size"></select>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <div class="table-responsive">
+                <table class="data-grid-table table table-bordered table-striped table-condensed">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="row-bottom row">
+                <div class="col-md-5">
+                    <div class="data-grid-info"></div>
+                </div>
+                <div class="col-md-7">
+                    <div class="data-grid-pages">
+                        <div class="data-grid-pagination"></div>
+                        <select class="data-grid-page-jumper form-control hidden"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list-loader overlay"><i class="fa fa-spinner fa-spin"></i></div>
+</div>

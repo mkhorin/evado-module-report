@@ -1,0 +1,9 @@
+
+<ul class="sidebar-menu tree-menu" data-jam="LoadableTreeMenu"
+    data-widget="tree"
+    data-animation-speed="0"
+    data-url="report/service/nav">
+    <% if (forbiddenAccess[section.id] !== true) { %>
+        <%- include('sideMenuItems', {items: section.children}) %>
+    <% } %>
+</ul>

@@ -1,0 +1,41 @@
+<%
+for (const item of items) {
+    if (forbiddenAccess[item.id] === true) {
+        continue;
+    }
+    let css = item.options.css;
+    if (item.data.type === 'header') {
+%>
+<li class="header <%- css %>"><%- item.data.title %></li>
+<%
+} else {
+    const opened = item.data.opened || openedItems.includes(item);
+    if (item.children) {
+        css += ' treeview';
+    }
+    if (opened) {
+        css += ' loaded menu-open';
+    }
+    if (item === activeItem) {
+        css += ' active';
+    }
+%>
+<li class="menu-item <%- css %>" data-id="<%- item.id %>">
+    <a href="<%- _widget.getItemUrl(item) %>" class="menu-item-btn">
+        <i class="<%- item.icon %>"></i>
+        <span><%- item.title %></span>
+        <% if (item.children) { %><i class="arrow fa fa-angle-left pull-right"></i><% } %>
+    </a>
+    <% if (item.children) { %>
+    <ul class="treeview-menu">
+        <% if (opened) { %>
+        <%- include('sideMenuItems', {items: item.children}) %>
+        <% } else { %>
+        <li class="menu-item-loader">
+            <span class="fa fa-spinner fa-spin"></span>
+        </li>
+        <% } %>
+    </ul>
+    <% } %>
+</li>
+<% }} %>

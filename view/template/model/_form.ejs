@@ -1,0 +1,14 @@
+
+<%- include(_view.get('_part/group/columns'), {
+    items: [{
+        template: _view.get('_part/attr/string'),
+        params: {
+            attr: 'name'
+        }
+    },{
+        template: _view.get('_part/attr/string'),
+        params: {
+            attr: 'label'
+        }
+    }]
+}) %>

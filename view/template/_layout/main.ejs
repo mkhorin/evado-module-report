@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <base href="<%- _baseUrl %>">
+
+    <title><%- blocks.title %> - <%- _module.getTitle() %></title>
+
+    <%- include(_view.get('_part/asset/style/defaults'), {skin: 'purple'}) %>
+    <link rel="stylesheet" href="report/style/module.css">
+    <%- include(_view.get('_part/asset/style/custom')) %>
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+    <!-- admin\views\_layouts\main -->
+    <%- body %>
+
+    <%- include(_view.get('_part/other/modal')) %>
+
+    <div class="global-loader overlay">
+        <span class="fa fa-spinner fa-spin"></span>
+    </div>
+
+    <%- include(_view.get('_part/asset/script/jam')) %>
+
+    <script src="report/jam/ReportList.js"></script>
+    <script src="report/jam/ReportMain.js"></script>
+
+    <%- include(_view.get('_part/asset/script/messages')) %>
+    <%- include(_view.get('_part/asset/script/defaults')) %>
+    <%- include(_view.get('_part/asset/script/custom')) %>
+
+    <script src="script/init.js"></script>
+</body>
+</html>
