@@ -88,17 +88,6 @@ module.exports = class BaseMetaController extends Base {
         }
     }
 
-    async setModel () {
-        const id = String(this.getQueryParam('id'));
-        const model = await this.meta.view.findById(id, this.module).withFormDefaults().one();
-        if (!model) {
-            throw new NotFound('Model not found');
-        }
-        model.setUser(this.user);
-        this.meta.model = model;
-        return model;
-    }
-
     setViewNodeMetaParams (params) {
         this.setNodeMetaParams(params);
         if (!this.meta.view) {

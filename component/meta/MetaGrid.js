@@ -74,26 +74,6 @@ module.exports = class MetaGrid extends Base {
             : this.query.where(['FALSE']);
     }
 
-    async resolveFilter () {
-        if (!Array.isArray(this.request.filter)) {
-            return null;
-        }
-        this.query.and(await (new ListFilterCondition({
-            report: this.report,
-            items: this.request.filter,
-            query: this.query,
-            ...this.filter
-        })).resolve());
-    }
-
-    filterByColumns (models) {
-        if (!models.length) {
-            return [];
-        }
-        this._attrTemplateMap = this.getAttrTemplateMap();
-        return PromiseHelper.map(models, this.renderModel, this);
-    }
-
     getAttrTemplateMap () {
         const map = {};
         for (const attr of this.report.attrs) {
