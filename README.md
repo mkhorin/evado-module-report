@@ -2,4 +2,4 @@
 
 ### Evado module for building business application reports
 
-[Evado Kit](https://github.com/mkhorin/evado)
+[Evado Platform](https://github.com/mkhorin/evado)
