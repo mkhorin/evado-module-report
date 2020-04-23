@@ -1,5 +1,5 @@
 # Evado Report
 
-### Evado module for building business application reports
+### Evado module for business intelligence reports
 
 [Evado Platform](https://github.com/mkhorin/evado)
