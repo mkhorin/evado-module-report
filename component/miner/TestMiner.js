@@ -11,7 +11,7 @@ module.exports = class TestMiner extends Base {
         await this.constructor.delay(1000);
         await this.deleteData();
 
-        const streetClass = this.docMeta.getClass('street');
+        const streetClass = this.baseMeta.getClass('street');
         const streets = await streetClass.find().raw().all();
         const result = streets.map(data => ({
             a: data.name,
