@@ -19,7 +19,7 @@ module.exports = class SearchFilterHelper extends Base {
             };
             if (attr.relation) {
                 depth = depth === undefined ? attr.searchDepth : depth;
-                data = this.getRelationData(data, attr, depth);
+                this.setRelationData(attr, data, depth);
             } else if (attr.enum) {
                 data.type = 'selector';
                 data.items = attr.enum.data[0].items;
@@ -38,7 +38,7 @@ module.exports = class SearchFilterHelper extends Base {
         return attr.getType();
     }
 
-    static getRelationData (data, attr, depth) {
+    static setRelationData (attr, data, depth) {
         if (depth > 0 && attr.relation.refClass) {
             data.columns = this.getColumns(attr.relation.refClass.searchAttrs, depth - 1);
         }
@@ -46,6 +46,5 @@ module.exports = class SearchFilterHelper extends Base {
         data.type = 'selector';
         data.valueType = 'id';
         data.relation = true;
-        return data;
     }
 };

@@ -79,7 +79,7 @@ module.exports = class BaseMetaController extends Base {
             throw new BadRequest(`Invalid master relation: ${param}`);
         }
         if (!id) {
-            master.model = master.view.spawnModel(this.getSpawnConfig());
+            master.model = master.view.createModel(this.getSpawnConfig());
             return master.model;
         }
         master.model = await master.view.findById(id, this.getSpawnConfig()).one();
