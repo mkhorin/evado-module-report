@@ -3,9 +3,9 @@
  */
 'use strict';
 
-const Base = require('evado/component/other/ListFilterCondition');
+const Base = require('evado/component/other/ListFilter');
 
-module.exports = class MetaListFilterCondition extends Base {
+module.exports = class MetaListFilter extends Base {
 
     parse (data) {
         const attr = this.report.getAttr(data.attr);

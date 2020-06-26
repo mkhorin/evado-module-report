@@ -75,11 +75,11 @@ module.exports = class MetaGrid extends Base {
     }
 
     getAttrTemplateMap () {
-        const map = {};
+        const data = {};
         for (const attr of this.report.attrs) {
-            // map[attr.name] = this.view.getMetaItemTemplate(attr);
+            // data[attr.name] = this.view.getMetaItemTemplate(attr);
         }
-        return map;
+        return data;
     }
 
     async renderModel (model) {
@@ -127,4 +127,3 @@ module.exports = class MetaGrid extends Base {
 
 const BadRequest = require('areto/error/BadRequestHttpException');
 const PromiseHelper = require('areto/helper/PromiseHelper');
-const ListFilterCondition = require('./MetaListFilterCondition');

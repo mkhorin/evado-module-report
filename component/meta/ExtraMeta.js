@@ -9,6 +9,7 @@ module.exports = class ExtraMeta extends Base {
 
     init () {
         this.metaHub = this.module.getMetaHub();
+
         this.metaHub.onAfterLoad(()=> {
             this.prepare(this.metaHub.get('report'));
         });

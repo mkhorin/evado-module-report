@@ -41,8 +41,8 @@ module.exports = class BaseMetaController extends Base {
         if (!data.class) {
             throw new BadRequest('Meta class not found');
         }
-        data.view = data.class.getViewByPrefix(this.module.NAME, params.viewName) || data.class;
-        return this.setMasterRelationMetaParams();
+        data.view = data.class.getViewByPrefix(this.module.getBaseName(), params.viewName) || data.class;
+        return this.setMasterMetaParams();
     }
 
     setAttrMetaParams (param) {
@@ -52,14 +52,14 @@ module.exports = class BaseMetaController extends Base {
         if (!data.class) {
             throw new BadRequest(`Meta class not found: ${param}`);
         }
-        data.view = data.class.getViewByPrefix(this.module.NAME, viewName) || data.class;
+        data.view = data.class.getViewByPrefix(this.module.getBaseName(), viewName) || data.class;
         data.attr = data.view.getAttr(attrName);
         if (!data.attr) {
             throw new BadRequest(`Meta attribute not found: ${param}`);
         }
     }
 
-    async setMasterRelationMetaParams (param) {
+    async setMasterMetaParams (param) {
         param = param || this.getQueryParam('m');
         if (!param) {
             return null;
@@ -97,7 +97,7 @@ module.exports = class BaseMetaController extends Base {
 
     setNodeMetaParams (params = {}) {
         let node = params.node || this.getQueryParam('n');
-        node = this.navMeta.getNode(node, this.module.NAME);
+        node = this.navMeta.getNode(node, this.module.getBaseName());
         if (!node) {
             throw new NotFound('Node not found');
         }
