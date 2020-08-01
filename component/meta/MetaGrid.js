@@ -125,5 +125,5 @@ module.exports = class MetaGrid extends Base {
     }
 };
 
-const BadRequest = require('areto/error/BadRequestHttpException');
+const BadRequest = require('areto/error/http/BadRequest');
 const PromiseHelper = require('areto/helper/PromiseHelper');

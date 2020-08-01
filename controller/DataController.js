@@ -44,6 +44,6 @@ module.exports = class DataController extends Base {
 };
 module.exports.init(module);
 
-const NotFound = require('areto/error/NotFoundHttpException');
-const BadRequest = require('areto/error/BadRequestHttpException');
+const NotFound = require('areto/error/http/NotFound');
+const BadRequest = require('areto/error/http/BadRequest');
 const MetaGrid = require('../component/meta/MetaGrid');

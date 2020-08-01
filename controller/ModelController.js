@@ -72,5 +72,5 @@ module.exports = class ModelController extends Base {
 };
 module.exports.init(module);
 
-const NotFound = require('areto/error/NotFoundHttpException');
-const BadRequest = require('areto/error/BadRequestHttpException');
+const NotFound = require('areto/error/http/NotFound');
+const BadRequest = require('areto/error/http/BadRequest');

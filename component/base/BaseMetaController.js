@@ -142,8 +142,8 @@ module.exports = class BaseMetaController extends Base {
     }
 };
 
-const BadRequest = require('areto/error/BadRequestHttpException');
-const NotFound = require('areto/error/NotFoundHttpException');
+const BadRequest = require('areto/error/http/BadRequest');
+const NotFound = require('areto/error/http/NotFound');
 const MetaParams = require('evado/component/meta/MetaParams');
 const MetaTransit = require('evado/component/meta/MetaTransit');
 const MetaSecurity = require('evado/component/meta/MetaSecurity');

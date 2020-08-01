@@ -18,5 +18,5 @@ module.exports = class ServiceController extends Base {
 };
 module.exports.init(module);
 
-const NotFound = require('areto/error/NotFoundHttpException');
+const NotFound = require('areto/error/http/NotFound');
 const SideMenu = require('../component/widget/SideMenu');
