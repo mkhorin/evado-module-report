@@ -112,7 +112,7 @@ module.exports = class Model extends Base {
     }
 
     deleteData () {
-        return this.getMetaReport().findByOwner(this.getId(), this.getSpawnConfig()).delete();
+        return this.getMetaReport().createQuery(this.getSpawnConfig()).byOwner(this.getId()).delete();
     }
 };
 module.exports.init(module);

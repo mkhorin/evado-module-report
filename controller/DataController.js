@@ -18,14 +18,15 @@ module.exports = class DataController extends Base {
 
     async actionList () {
         this.setMetaParams();
-        const model = await this.spawn('model/Model').findById(this.getPostParam('ownerId')).inReadyState().one();
+        const owner = this.getPostParam('ownerId');
+        const model = await this.spawn('model/Model').findById(owner).inReadyState().one();
         if (!model) {
-            throw new BadRequest(`Report model not found`);
+            throw new NotFound(`Report model not found`);
         }
         // await this.security.resolveOnReport(this.meta.report);
         this.sendJson(await this.spawn(MetaGrid, {
             controller: this,
-            query: this.meta.report.findByOwner(model.getId(), this.getSpawnConfig())
+            query: this.meta.report.createQuery(this.getSpawnConfig()).byOwner(model.getId())
         }).getList());
     }
 
@@ -36,7 +37,7 @@ module.exports = class DataController extends Base {
         }
         const report = this.reportMeta.getReport(node.data.report);
         if (!report) {
-            throw new BadRequest(`Report not found`);
+            throw new NotFound(`Report not found`);
         }
         this.meta.node = node;
         this.meta.report = report;

@@ -82,7 +82,7 @@ module.exports = class BaseMetaController extends Base {
             master.model = master.view.createModel(this.getSpawnConfig());
             return master.model;
         }
-        master.model = await master.view.findById(id, this.getSpawnConfig()).one();
+        master.model = await master.view.createQuery(this.getSpawnConfig()).byId(id).one();
         if (!master.model) {
             throw new NotFound(`Master model not found: ${param}`);
         }

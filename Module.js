@@ -12,7 +12,9 @@ module.exports = class ReportModule extends Base {
             BEHAVIORS: {
                 'access': {
                     Class: require('areto/filter/AccessControl'),
-                    rules: [{permissions: ['moduleReport']}]
+                    rules: [{
+                        permissions: ['moduleReport']
+                    }]
                 }
             }
         };
