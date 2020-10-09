@@ -30,7 +30,7 @@ module.exports = class MiningJob extends Base {
             throw new Error('Not pending state');
         }
         try {
-            const miner = this.module.get('miner').createMiner(model);
+            const miner = this.module.getMinerManager().createMinerByModel(model);
             await model.saveProcessingState();
             await miner.start();
             if (await model.findSelf().count()) {

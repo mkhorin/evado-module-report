@@ -3,12 +3,12 @@
  */
 'use strict';
 
-const Base = require('../component/base/BaseActiveRecord');
-
 const STATE_PENDING = 'pending';
 const STATE_PROCESSING = 'processing';
 const STATE_READY = 'ready';
 const STATE_ERROR = 'error';
+
+const Base = require('../component/base/BaseActiveRecord');
 
 module.exports = class Model extends Base {
 
@@ -78,6 +78,10 @@ module.exports = class Model extends Base {
         return this.getMeta().getReport(this.get('report'));
     }
 
+    getMinerManager () {
+        return this.module.getMinerManager();
+    }
+
     relCreator () {
         const Class = this.getClass('model/User');
         return this.hasOne(Class, Class.PK, 'creator');
@@ -98,21 +102,20 @@ module.exports = class Model extends Base {
         return this.forceSave();
     }
 
-    async afterSave (insert) {
-        if (insert) {
-            await this.module.get('miner').executeMiningTask();
-        }
-        await super.afterSave(insert);
+    async afterInsert () {
+        await this.getMinerManager().executeMiningTask();
+        await super.afterInsert();
     }
 
     async afterDelete () {
         await this.deleteData(); // delete report data
-        await this.module.get('miner').deleteMiner(this);
+        await this.getMinerManager().deleteMinerByModel(this);
         await super.afterDelete();
     }
 
     deleteData () {
-        return this.getMetaReport().createQuery(this.getSpawnConfig()).byOwner(this.getId()).delete();
+        const query = this.getMetaReport().createQuery(this.getSpawnConfig());
+        return query.byOwner(this.getId()).delete();
     }
 };
 module.exports.init(module);

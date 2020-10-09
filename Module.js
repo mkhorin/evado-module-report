@@ -19,5 +19,9 @@ module.exports = class ReportModule extends Base {
             }
         };
     }
+
+    getMinerManager () {
+        return this.module.components.get('miner');
+    }
 };
 module.exports.init(module);

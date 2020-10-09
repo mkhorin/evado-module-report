@@ -24,12 +24,5 @@ module.exports = {
             Class: require('../component/widget/SideMenu')
         }
     },
-    tasks: {
-        'mining': {
-            job: {
-                Class: require('../component/scheduler/MiningJob')
-            },
-            startup: true
-        }
-    }
+    tasks: require('./default-tasks')
 };
