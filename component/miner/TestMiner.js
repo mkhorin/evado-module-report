@@ -7,8 +7,8 @@ const Base = require('evado-meta-report/base/BaseMiner');
 
 module.exports = class TestMiner extends Base {
 
-    async run () {
-        await this.constructor.delay(1000);
+    async execute () {
+        await Base.delay(1000);
         await this.deleteData();
 
         const streetClass = this.baseMeta.getClass('street');
@@ -18,6 +18,6 @@ module.exports = class TestMiner extends Base {
             b: `test-${data.name}`
         }));
         await this.insertData(result);
-        return this.constructor.delay(10000);
+        return Base.delay(10000);
     }
 };

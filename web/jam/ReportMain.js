@@ -31,7 +31,7 @@ Jam.ReportMain = class ReportMain extends Jam.Element {
         const id = $row.data('id');
         const data = this.instanceList.grid.getData(id);
         if (!this.isReadyItem(data)) {
-            return this.instanceList.notice.warning('Only for the ready state');
+            return this.instanceList.alert.warning('Only for the ready state');
         }
         this.createTab(id, data);
         this.tabs.setActive(id);

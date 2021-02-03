@@ -6,36 +6,35 @@ for (const item of items) {
     let css = item.options.css;
     if (item.data.type === 'header') {
 %>
-<li class="header <%- css %>"><%- item.data.title %></li>
+<div class="nav-header <%- css %>"><%- item.data.title %></div>
 <%
 } else {
     const opened = item.data.opened || openedItems.includes(item);
     if (item.children) {
-        css += ' treeview';
+        css += ' tree';
     }
     if (opened) {
-        css += ' loaded menu-open';
+        css += ' loaded open';
     }
     if (item === activeItem) {
         css += ' active';
     }
 %>
-<li class="menu-item <%- css %>" data-id="<%- item.id %>">
-    <a href="<%- _widget.getItemUrl(item) %>" class="menu-item-btn">
-        <i class="<%- item.icon %>"></i>
+<div class="nav-item <%- css %>" data-id="<%- item.id %>">
+    <a href="<%- _widget.getItemUrl(item) %>" class="nav-link">
         <span><%- item.title %></span>
-        <% if (item.children) { %><i class="arrow fa fa-angle-left pull-right"></i><% } %>
+        <span class="arrow fa fa-angle-left"></span>
     </a>
     <% if (item.children) { %>
-    <ul class="treeview-menu">
+    <div class="nav-children">
         <% if (opened) { %>
         <%- include('sideMenuItems', {items: item.children}) %>
         <% } else { %>
-        <li class="menu-item-loader">
-            <span class="fa fa-spinner fa-spin"></span>
-        </li>
+        <div class="nav-item-loader">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
         <% } %>
-    </ul>
+    </div>
     <% } %>
-</li>
+</div>
 <% }} %>

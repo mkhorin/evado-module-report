@@ -12,16 +12,16 @@ module.exports = class MiningJob extends Base {
         this.Model = this.Model || config.module.getClass('model/Model');
     }
 
-    async run () {
-        await this.runPending();
+    async execute () {
+        await this.executePending();
     }
 
-    async runPending () {
+    async executePending () {
         await PromiseHelper.setTimeout(100);
         const model = await this.spawn(this.Model).find().inPendingState().one();
         if (model) {
             await this.startMining(model);
-            await this.runPending();
+            await this.executePending();
         }       
     }
 

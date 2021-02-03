@@ -9,18 +9,17 @@ module.exports = class ExtraMeta extends Base {
 
     init () {
         this.metaHub = this.module.getMetaHub();
-
-        this.metaHub.onAfterLoad(()=> {
+        this.metaHub.onAfterLoad(() => {
             this.prepare(this.metaHub.get('report'));
         });
     }
 
     getData ({id}) {
-        return Object.prototype.hasOwnProperty.call(this._data, id) && this._data[id];
+        return ObjectHelper.getValue(id, this._data);
     }
 
     getPageTitle ({node, view}) {
-        return node.data.label || (view && view.data.label) || node.title;
+        return node.data.label || view?.data.label || node.title;
     }
 
     // REPORT
@@ -71,4 +70,5 @@ module.exports = class ExtraMeta extends Base {
     }
 };
 
+const ObjectHelper = require('areto/helper/ObjectHelper');
 const SearchFilterHelper = require('./SearchFilterHelper');
