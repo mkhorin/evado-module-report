@@ -24,11 +24,11 @@ Jam.ReportMain = class ReportMain extends Jam.Element {
     }
 
     onShowReport () {
-        const $row = this.instanceList.getSelectedRow();
-        if (!$row) {
+        const $item = this.instanceList.getSelectedItem();
+        if (!$item) {
             return false;
         }
-        const id = $row.data('id');
+        const id = $item.data('id');
         const data = this.instanceList.grid.getData(id);
         if (!this.isReadyItem(data)) {
             return this.instanceList.alert.warning('Only for the ready state');
@@ -47,7 +47,7 @@ Jam.ReportMain = class ReportMain extends Jam.Element {
         const result = this.getFirstReadyStateData();
         if (result) {
             this.createTab(...result);
-            this.instanceList.toggleRowSelect(this.instanceList.grid.findRowById(result[0]), true);
+            this.instanceList.toggleItemSelect(this.instanceList.findItemById(result[0]), true);
         }
     }
 
