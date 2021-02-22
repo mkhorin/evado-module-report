@@ -19,10 +19,5 @@ module.exports = {
         // defaultUrl: 'report/model?n=[item].[section]'
     },
     classes: require('./default-classes'),
-    widgets: {
-        'sideMenu': {
-            Class: require('../component/widget/SideMenu')
-        }
-    },
     tasks: require('./default-tasks')
 };
