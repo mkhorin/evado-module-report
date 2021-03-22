@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const Base = require('evado/component/other/DataGrid');
+const Base = require('evado/component/misc/DataGrid');
 
 module.exports = class MetaGrid extends Base {
 

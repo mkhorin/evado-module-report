@@ -19,5 +19,10 @@ module.exports = {
         // defaultUrl: 'report/model?n=[item].[section]'
     },
     classes: require('./default-classes'),
-    tasks: require('./default-tasks')
+    tasks: require('./default-tasks'),
+    widgets: {
+        'sideMenu': {
+            Class: require('../component/widget/SideMenu')
+        }
+    }
 };

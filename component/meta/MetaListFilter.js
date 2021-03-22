@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const Base = require('evado/component/other/ListFilter');
+const Base = require('evado/component/misc/ListFilter');
 
 module.exports = class MetaListFilter extends Base {
 
