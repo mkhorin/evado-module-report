@@ -1,7 +1,9 @@
-<% layout(_view.get(_layout)) %>
-<% block('title', 'Update report') %>
+<%
+layout(_view.get(_layout));
+block('title', 'Update report');
 
-<% const userUrl = _module.getParam('userUpdateUrl'); %>
+const userUrl = _module.getParam('userUpdateUrl');
+%>
 
 <%- include(_view.get('_part/group/columns'), {
     items: [{

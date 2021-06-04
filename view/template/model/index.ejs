@@ -1,7 +1,8 @@
-<% layout(_view.get('_layout/content')) %>
-
-<% block('tab', 'Report') %>
-<% block('title', meta.report.getTitle()) %>
+<%
+layout(_view.get('_layout/content'));
+block('tab', 'Report');
+block('title', meta.report.getTitle());
+%>
 
 <div data-jam="ReportMain">
     <%- include(_view.get('_part/misc/tabs'), {
