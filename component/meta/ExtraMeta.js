@@ -47,26 +47,34 @@ module.exports = class ExtraMeta extends Base {
     getGridColumns (report) {
         const columns = [];
         if (!report.hasKeyAttr()) {
-            columns.push({
-                name: report.getKey(),
-                label: 'ID',
-                searchable: true,
-                sortable: true,
-                hidden: true
-            });
+            columns.push(this.getKeyGridColumn(report));
         }
         for (const attr of report.attrs) {
-            columns.push({
-                name: attr.name,
-                label: attr.getLabel(),
-                type: attr.getType(),
-                searchable: attr.data.commonSearchable,
-                sortable: attr.data.sortable,
-                format: attr.getFormat(),
-                hidden: attr.isHidden()
-            });
+            columns.push(this.getGridColumn(attr));
         }
         return columns;
+    }
+
+    getKeyGridColumn (report) {
+        return {
+            name: report.getKey(),
+            label: 'ID',
+            searchable: true,
+            sortable: true,
+            hidden: true
+        };
+    }
+
+    getGridColumn (attr) {
+        return {
+            name: attr.name,
+            label: attr.getLabel(),
+            type: attr.getType(),
+            searchable: attr.data.commonSearchable,
+            sortable: attr.data.sortable,
+            format: attr.getFormat(),
+            hidden: attr.isHidden()
+        };
     }
 };
 

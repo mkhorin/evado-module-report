@@ -7,10 +7,13 @@ const Base = require('evado/component/misc/DataGrid');
 
 module.exports = class MetaGrid extends Base {
 
+    /**
+     * @param {Object} config
+     * @param {Object} config.query - Query instance
+     * @param {Object} config.controller - Controller instance
+     */
     constructor (config) {
         super({
-            // query: new Query
-            // controller: this,
             meta: config.controller.meta,
             view: config.controller.getView(),
             ...config
