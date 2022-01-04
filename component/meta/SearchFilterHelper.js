@@ -7,28 +7,32 @@ const Base = require('areto/base/Base');
 
 module.exports = class SearchFilterHelper extends Base {
 
-    static getColumns (searchAttrs, depth) {
+    static getColumns (cls, depth) {
         const columns = [];
-        for (const attr of searchAttrs) {
-            let data = {
-                name: attr.name,
-                label: attr.getLabel(),
-                type: this.getAttrType(attr),
-                format: attr.getFormat(),
-                utc: attr.isUTC()
-            };
-            if (attr.relation) {
-                depth = depth === undefined ? attr.searchDepth : depth;
-                this.setRelationData(attr, data, depth);
-            } else if (attr.enum) {
-                data.type = 'selector';
-                data.items = attr.enum.data[0].items;
-            }
-            if (data) {
-                columns.push(data);
-            }
+        for (const attr of cls.searchAttrs) {
+            columns.push(this.getColumn(attr, depth));
         }
         return columns;
+    }
+
+    static getColumn (attr, depth) {
+        if (attr.relation) {
+            return this.getRelationData(attr, depth);
+        }
+        if (attr.enum) {
+            return this.getEnumData(attr);
+        }
+        return this.getDefaultData(attr);
+    }
+
+    static getDefaultData (attr) {
+        return {
+            name: attr.name,
+            label: attr.getLabel(),
+            type: this.getAttrType(attr),
+            format: attr.getFormat(),
+            utc: attr.isUTC()
+        };
     }
 
     static getAttrType (attr) {
@@ -38,13 +42,20 @@ module.exports = class SearchFilterHelper extends Base {
         return attr.getType();
     }
 
-    static setRelationData (attr, data, depth) {
+    static getRelationData (attr, depth = attr.searchDepth) {
+        const data = this.getDefaultData(attr);
         if (depth > 0 && attr.relation.refClass) {
-            data.columns = this.getColumns(attr.relation.refClass.searchAttrs, depth - 1);
+            data.columns = this.getColumns(attr.relation.refClass, depth - 1);
         }
         data.id = attr.id;
         data.type = 'selector';
-        data.valueType = 'id';
-        data.relation = true;
+        return data;
+    }
+
+    static getEnumData (attr) {
+        const data = this.getDefaultData(attr);
+        data.type = 'selector';
+        data.items = attr.enum.data[0].items;
+        return data;
     }
 };

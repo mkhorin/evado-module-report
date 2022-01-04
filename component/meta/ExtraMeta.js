@@ -40,7 +40,7 @@ module.exports = class ExtraMeta extends Base {
     getReportData (item) {
         return {
             columns: this.getGridColumns(item),
-            filterColumns: SearchFilterHelper.getColumns(item.searchAttrs)
+            filterColumns: SearchFilterHelper.getColumns(item)
         };
     }
 
