@@ -4,18 +4,18 @@ for (const item of items) {
         continue;
     }
     let translation = item.isSystem() ? 'null' : `meta.${item.translationKey}`;
-    let css = item.options.css;
-if (item.data.type === 'divider') {
+    let css = item.options.css || '';
+if (item.isDivider()) {
 %>
 <div class="nav-divider"></div>
-<% } else if (item.data.type === 'header') { %>
-<div class="nav-header <%- css %>" data-t="<%- translation %>"><%- item.label %></div>
+<% } else if (item.isHeader()) { %>
+<div class="nav-header <%- css %>" data-t="<%- translation %>"><%= item.label %></div>
 <%
 } else {
-    let opened = item.data.opened || openedItems.includes(item);
     if (item.children) {
         css += ' tree';
     }
+    const opened = item.data.opened || item === activeItem || openedItems.includes(item);
     if (opened) {
         css += ' loaded open';
     }
@@ -25,8 +25,8 @@ if (item.data.type === 'divider') {
 %>
 <div class="nav-item <%- css %>" data-id="<%- item.id %>">
     <% if (item.children) { %>
-    <a href="javascript:void(0)" class="nav-link" data-url="<%- _widget.getItemUrl(item) %>">
-        <span data-t="<%- translation %>"><%- item.label %></span>
+    <a href="<%- item.isContainer() ? '' : _widget.getItemUrl(item) %>" class="nav-link">
+        <span data-t="<%- translation %>"><%= item.label %></span>
         <span class="arrow fa fa-angle-left"></span>
     </a>
     <div class="nav-children">
@@ -38,9 +38,9 @@ if (item.data.type === 'divider') {
         </div>
         <% } %>
     </div>
-    <% } else { %>
+    <% } else if (!item.isContainer()) { %>
     <a href="<%- _widget.getItemUrl(item) %>" class="nav-link">
-        <span data-t="<%- translation %>"><%- item.label %></span>
+        <span data-t="<%- translation %>"><%= item.label %></span>
     </a>
     <% }%>
 </div>
