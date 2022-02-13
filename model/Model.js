@@ -28,13 +28,13 @@ module.exports = class Model extends Base {
                 ['name', 'regex', {pattern: /^[0-9a-zA-Z-]+$/}],
                 [['name', 'label'], 'unique'],
                 ['state', 'default', {value: STATE_PENDING}]
-            ],            
+            ],
             BEHAVIORS: {
                 'timestamp': require('areto/behavior/TimestampBehavior'),
                 'userStamp': require('areto/behavior/UserStampBehavior')
             },
             UNLINK_ON_DELETE: [
-            ],            
+            ],
             ATTR_LABELS: {
                 'report': 'Report class'
             },

@@ -1,7 +1,7 @@
 ## 2.3.0
 
 * ignore built vendors
-* update side menu    
+* update side menu
 
 ## 2.2.0
 
@@ -17,7 +17,7 @@
 
 * component/miner/TestMiner
     - fix entry point
-* migration to Bootstrap 5    
+* migration to Bootstrap 5
 
 ## 1.6.0
 

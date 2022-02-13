@@ -22,7 +22,7 @@ module.exports = class MiningJob extends Base {
         if (model) {
             await this.startMining(model);
             await this.executePending();
-        }       
+        }
     }
 
     async startMining (model) {
