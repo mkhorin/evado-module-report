@@ -19,7 +19,7 @@ module.exports = class ExtraMeta extends Base {
     }
 
     getPageTitle ({node, view}) {
-        return node.data.label || view?.data.label || node.title;
+        return node.data.label || view?.data.label || node.label;
     }
 
     // REPORT
