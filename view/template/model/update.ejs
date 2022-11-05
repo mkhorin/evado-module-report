@@ -2,7 +2,7 @@
 layout(_view.get(_layout));
 block('title', 'Update report');
 
-const userUrl = _module.getParam('userUpdateUrl');
+const {userUpdateUrl} = _module.params;
 %>
 
 <%- include(_view.get('_part/group/columns'), {
@@ -34,7 +34,7 @@ const userUrl = _module.getParam('userUpdateUrl');
         params: {
             attr: 'creator',
             value: model.get('creator.name'),
-            url: userUrl ? _url(userUrl) + model.get('creator') : null
+            url: userUpdateUrl ? _url(userUpdateUrl) + model.get('creator') : null
         }
     }]
 }) %>

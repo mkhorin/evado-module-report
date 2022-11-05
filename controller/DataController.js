@@ -18,20 +18,21 @@ module.exports = class DataController extends Base {
 
     async actionList () {
         this.setMetaParams();
-        const owner = this.getPostParam('ownerId');
-        const model = await this.spawn('model/Model').findById(owner).inReadyState().one();
+        const {ownerId} = this.getPostParams();
+        const model = await this.spawn('model/Model').findById(ownerId).inReadyState().one();
         if (!model) {
             throw new NotFound(`Report model not found`);
         }
         // await this.security.resolveOnReport(this.meta.report);
-        this.sendJson(await this.spawn(MetaGrid, {
-            controller: this,
-            query: this.meta.report.createQuery(this.getSpawnConfig()).byOwner(model.getId())
-        }).getList());
+        const config = this.getSpawnConfig();
+        const query = this.meta.report.createQuery(config).byOwner(model.getId());
+        const grid = this.spawn(MetaGrid, {controller: this, query});
+        this.sendJson(await grid.getList());
     }
 
     setMetaParams () {
-        const node = this.navMeta.getNode(this.getQueryParam('n'));
+        const {n} =this.getQueryParams();
+        const node = this.navMeta.getNode(n);
         if (!node) {
             throw new NotFound('Node not found');
         }

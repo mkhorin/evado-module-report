@@ -8,12 +8,16 @@ const Base = require('../component/base/BaseMetaController');
 module.exports = class ServiceController extends Base {
 
     async actionNav () {
-        const node = this.setNodeMetaParams({node: this.getQueryParam('id')});
-        if (!node.children) {
+        const {id} = this.getQueryParams();
+        const {children} = this.setNodeMetaParams({node: id});
+        if (!children) {
             throw new NotFound('Invalid node children');
         }
-        const menu = this.spawn(SideMenu, {view: this.createView()});
-        this.send(await menu.renderItems(node.children));
+        const menu = this.spawn(SideMenu, {
+            view: this.createView()
+        });
+        const data = await menu.renderItems(children);
+        this.send(data);
     }
 };
 module.exports.init(module);

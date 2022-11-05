@@ -36,8 +36,9 @@ module.exports = class BaseMetaController extends Base {
     }
 
     setMetaParams (params = {}) {
+        const {c} = this.getQueryParams();
         const data = this.meta;
-        data.class = this.baseMeta.getClass(params.source || this.getQueryParam('c'));
+        data.class = this.baseMeta.getClass(params.source || c);
         if (!data.class) {
             throw new BadRequest('Meta class not found');
         }
@@ -59,32 +60,35 @@ module.exports = class BaseMetaController extends Base {
         }
     }
 
-    async setMasterMetaParams (param) {
-        param = param || this.getQueryParam('m');
-        if (!param) {
+    async setMasterMetaParams (data) {
+        if (!data) {
+            data = this.getQueryParam('m');
+        }
+        if (!data) {
             return null;
         }
-        const [attrName, id, className] = String(param).split('.');
+        const [attrName, id, className] = String(data).split('.');
         const master = this.meta.master;
         master.class = this.baseMeta.getClass(className);
         if (!master.class) {
-            throw new BadRequest(`Master class not found: ${param}`);
+            throw new BadRequest(`Master class not found: ${data}`);
         }
         master.view = master.class;
         master.attr = master.view.getAttr(attrName);
         if (!master.attr) {
-            throw new BadRequest(`Master attribute not found: ${param}`);
+            throw new BadRequest(`Master attribute not found: ${data}`);
         }
         if (!this.meta.master.attr.relation) {
-            throw new BadRequest(`Invalid master relation: ${param}`);
+            throw new BadRequest(`Invalid master relation: ${data}`);
         }
         if (!id) {
             master.model = master.view.createModel(this.getSpawnConfig());
             return master.model;
         }
-        master.model = await master.view.createQuery(this.getSpawnConfig()).byId(id).one();
+        const config = this.getSpawnConfig();
+        master.model = await master.view.createQuery(config).byId(id).one();
         if (!master.model) {
-            throw new NotFound(`Master model not found: ${param}`);
+            throw new NotFound(`Master model not found: ${data}`);
         }
     }
 
@@ -120,7 +124,8 @@ module.exports = class BaseMetaController extends Base {
     }
 
     handleModelError (model) {
-        this.send({[model.class.name]: this.translateMessageMap(model.getFirstErrorMap())}, 400);
+        const errors = model.getFirstErrorMap();
+        this.send({[model.class.name]: this.translateMessageMap(errors)}, 400);
     }
 
     async renderMeta (template, params) {
@@ -130,7 +135,8 @@ module.exports = class BaseMetaController extends Base {
     }
 
     hasUtility () {
-        return this.module.get('utility').isActiveUtility({
+        const manager = this.module.get('utility');
+        return manager.isActiveUtility({
             controller: this,
             modelAction: this.action.name
         });

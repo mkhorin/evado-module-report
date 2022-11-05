@@ -17,8 +17,10 @@ module.exports = class DefaultController extends Base {
     }
 
     actionIndex () {
-        const url = this.module.getParam('defaultUrl');
-        return url ? this.redirect(url) : this.render('index');
+        const {defaultUrl} = this.module.params;
+        return defaultUrl
+            ? this.redirect(defaultUrl)
+            : this.render('index');
     }
 };
 module.exports.init(module);

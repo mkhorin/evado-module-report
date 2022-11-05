@@ -44,7 +44,8 @@ module.exports = class ModelController extends Base {
 
     actionList () {
         this.setNodeMetaParams();
-        const query = this.spawn('model/Model').find().byReport(this.meta.report).with('creator');
+        const model = this.spawn('model/Model');
+        const query = model.find().byReport(this.meta.report).with('creator');
         return super.actionList(query);
     }
 
@@ -58,7 +59,8 @@ module.exports = class ModelController extends Base {
     }
 
     setNodeMetaParams () {
-        const node = this.navMeta.getNode(this.getQueryParam('n'));
+        const {n} = this.getQueryParams();
+        const node = this.navMeta.getNode(n);
         if (!node) {
             throw new NotFound('Node not found');
         }
