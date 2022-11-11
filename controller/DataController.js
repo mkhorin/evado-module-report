@@ -19,7 +19,8 @@ module.exports = class DataController extends Base {
     async actionList () {
         this.setMetaParams();
         const {ownerId} = this.getPostParams();
-        const model = await this.spawn('model/Model').findById(ownerId).inReadyState().one();
+        const modelQuery = this.spawn('model/Model').findById(ownerId).inReadyState();
+        const model = await modelQuery.one();
         if (!model) {
             throw new NotFound(`Report model not found`);
         }
@@ -27,7 +28,8 @@ module.exports = class DataController extends Base {
         const config = this.getSpawnConfig();
         const query = this.meta.report.createQuery(config).byOwner(model.getId());
         const grid = this.spawn(MetaGrid, {controller: this, query});
-        this.sendJson(await grid.getList());
+        const data = await grid.getList();
+        this.sendJson(data);
     }
 
     setMetaParams () {

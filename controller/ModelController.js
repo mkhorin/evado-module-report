@@ -19,7 +19,8 @@ module.exports = class ModelController extends Base {
     async actionIndex () {
         this.setNodeMetaParams();
         const model = this.spawn('model/Model');
-        const ownerId = await model.find().inReadyState().byReport(this.meta.report).max(model.PK);
+        const query = model.find().inReadyState().byReport(this.meta.report);
+        const ownerId = await query.max(model.PK);
         return super.actionIndex({
             templateData: this.getMetaParams({ownerId})
         });

@@ -12,7 +12,8 @@ module.exports = class MetaListFilter extends Base {
         if (this.report.searchAttrs.includes(attr)) {
             return super.parse(data);
         }
-        throw new BadRequest(this.wrapClassMessage(`Invalid search attribute: ${data.attr}.${this.report.id}`));
+        const message = `Invalid search attribute: ${data.attr}.${this.report.id}`;
+        throw new BadRequest(this.wrapClassMessage(message));
     }
 };
 

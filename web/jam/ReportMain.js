@@ -39,7 +39,7 @@ Jam.ReportMain = class ReportMain extends Jam.Element {
 
     onChangeTab (event, data) {
         if (!this.instanceList) {
-            this.createInstanceList(data.id);
+            //this.createInstanceList(data.id);
         }
     }
 
@@ -47,7 +47,8 @@ Jam.ReportMain = class ReportMain extends Jam.Element {
         const result = this.getFirstReadyStateData();
         if (result) {
             this.createTab(...result);
-            this.instanceList.toggleItemSelect(this.instanceList.findItemById(result[0]), true);
+            const item = this.instanceList.findItemById(result[0]);
+            this.instanceList.toggleItemSelect(item, true);
         }
     }
 
@@ -57,10 +58,11 @@ Jam.ReportMain = class ReportMain extends Jam.Element {
     }
 
     createTab (id, data) {
+        const template = this.getTemplate('report');
         this.tabs.appendTab(id, {
             text: data.label || data.name || data.createdAt,
             hint: data.createdAt,
-            content: Jam.Helper.resolveTemplate(this.getTemplate('report'), {ownerId: id}),
+            content: Jam.Helper.resolveTemplate(template, {ownerId: id}),
             close: true
         });
     }
