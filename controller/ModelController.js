@@ -21,25 +21,23 @@ module.exports = class ModelController extends Base {
         const model = this.spawn('model/Model');
         const query = model.find().inReadyState().byReport(this.meta.report);
         const ownerId = await query.max(model.PK);
-        return super.actionIndex({
-            templateData: this.getMetaParams({ownerId})
-        });
+        const templateData = this.getMetaParams({ownerId});
+        return super.actionIndex({templateData});
     }
 
     actionCreate () {
         this.setNodeMetaParams();
         const model = this.spawn('model/Model');
         model.set('report', this.meta.report.id);
-        return super.actionCreate({
-            model,
-            templateData: this.getMetaParams()
-        });
+        const templateData = this.getMetaParams();
+        return super.actionCreate({model, templateData});
     }
 
     actionUpdate () {
+        const params = this.getMetaParams();
         return super.actionUpdate({
             with: 'creator',
-            templateData: this.getMetaParams()
+            templateData: params
         });
     }
 

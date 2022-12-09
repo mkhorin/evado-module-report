@@ -66,7 +66,8 @@ module.exports = class MetaGrid extends Base {
                 conditions.push(condition);
             }
         }
-        if (!this.report.commonSearchAttrs.includes(this.report.getKey())) {
+        const key = this.report.getKey();
+        if (!this.report.commonSearchAttrs.includes(key)) {
             const condition = this.report.key.getCondition(value);
             if (condition) {
                 conditions.push(condition);
@@ -99,10 +100,11 @@ module.exports = class MetaGrid extends Base {
 
     async renderCell (attr, model, result) {
         const name = attr.name;
-        if (!this._attrTemplateMap[name]) {
+        const template = this._attrTemplateMap[name];
+        if (!template) {
             return result[name] = this.renderAttr(name, attr, model);
         }
-        const content = await this.view.render(this._attrTemplateMap[name], {attr, model});
+        const content = await this.view.render(template, {attr, model});
         result[name] = `<!--handler: ${name}-->${content}`;
     }
 

@@ -18,7 +18,8 @@ module.exports = class MiningJob extends Base {
 
     async executePending () {
         await PromiseHelper.setTimeout(100);
-        const model = await this.spawn(this.Model).find().inPendingState().one();
+        const query = this.spawn(this.Model).find().inPendingState();
+        const model = await query.one();
         if (model) {
             await this.startMining(model);
             await this.executePending();
@@ -30,13 +31,17 @@ module.exports = class MiningJob extends Base {
             throw new Error('Not pending state');
         }
         try {
-            const miner = this.module.getMinerManager().createMinerByModel(model);
+            const manager = this.module.getMinerManager();
+            const miner = manager.createMinerByModel(model);
             await model.saveProcessingState();
             await miner.start();
-            if (await model.findSelf().count()) {
+            const counter = await model.findSelf().count();
+            if (counter) {
                 await model.saveReadyState();
-                const duration = `duration: ${Math.ceil(miner.duration / 1000)} sec.`;
-                this.log('info', `Mining done: ${miner.constructor.name}: ${model.getId()}: ${duration}`);
+                const type = miner.constructor.name;
+                const id = model.getId();
+                const duration = Math.ceil(miner.duration / 1000);
+                this.log('info', `Mining done: ${type}: ${id}: duration: ${duration} sec.`);
             } else { // model was deleted during mining
                 await model.deleteData();
             }

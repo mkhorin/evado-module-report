@@ -40,7 +40,8 @@ module.exports = class MinerManager extends Base {
 
     async deleteMiner (miner) {
         await miner.stop();
-        this._miners.unset(miner.model.getId());
+        const id = miner.model.getId();
+        this._miners.unset(id);
     }
 };
 module.exports.init(module);

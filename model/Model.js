@@ -114,7 +114,8 @@ module.exports = class Model extends Base {
     }
 
     deleteData () {
-        const query = this.getMetaReport().createQuery(this.getSpawnConfig());
+        const config = this.getSpawnConfig();
+        const query = this.getMetaReport().createQuery(config);
         return query.byOwner(this.getId()).delete();
     }
 };

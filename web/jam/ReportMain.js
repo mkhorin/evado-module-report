@@ -8,10 +8,13 @@ Jam.ReportMain = class ReportMain extends Jam.Element {
     constructor ($container) {
         super($container);
         this.$container = $container;
-        this.tabs = Jam.Tabs.createInstance($container.children('.tabs'));
+
+        const $tabs = $container.children('.tabs');
+        this.tabs = Jam.Tabs.createInstance($tabs);
         this.tabs.event.on('change', this.onChangeTab.bind(this));
 
-        this.instanceList = Jam.Element.getInstance($container.find('.data-grid'));
+        const $grid = $container.find('.data-grid');
+        this.instanceList = Jam.Element.getInstance($grid);
         this.instanceList.grid.event.one('afterDrawPage', this.onAfterDrawInstanceList.bind(this));
         this.instanceList.event.one('afterDelete', this.onAfterDeleteInstanceList.bind(this));
 
@@ -59,11 +62,12 @@ Jam.ReportMain = class ReportMain extends Jam.Element {
 
     createTab (id, data) {
         const template = this.getTemplate('report');
+        const content = Jam.Helper.resolveTemplate(template, {ownerId: id});
         this.tabs.appendTab(id, {
             text: data.label || data.name || data.createdAt,
             hint: data.createdAt,
-            content: Jam.Helper.resolveTemplate(template, {ownerId: id}),
-            close: true
+            close: true,
+            content
         });
     }
 

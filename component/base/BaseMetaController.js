@@ -81,12 +81,13 @@ module.exports = class BaseMetaController extends Base {
         if (!this.meta.master.attr.relation) {
             throw new BadRequest(`Invalid master relation: ${data}`);
         }
+        const config = this.getSpawnConfig();
         if (!id) {
-            master.model = master.view.createModel(this.getSpawnConfig());
+            master.model = master.view.createModel(config);
             return master.model;
         }
-        const config = this.getSpawnConfig();
-        master.model = await master.view.createQuery(config).byId(id).one();
+        const query = master.view.createQuery(config).byId(id);
+        master.model = await query.one();
         if (!master.model) {
             throw new NotFound(`Master model not found: ${data}`);
         }
@@ -125,7 +126,9 @@ module.exports = class BaseMetaController extends Base {
 
     handleModelError (model) {
         const errors = model.getFirstErrorMap();
-        this.send({[model.class.name]: this.translateMessageMap(errors)}, 400);
+        const messages = this.translateMessageMap(errors);
+        const data = {[model.class.name]: messages};
+        this.send(data, Response.BAD_REQUEST);
     }
 
     async renderMeta (template, params) {
@@ -153,3 +156,4 @@ const NotFound = require('areto/error/http/NotFound');
 const MetaParams = require('evado/component/meta/MetaParams');
 const MetaTransit = require('evado/component/meta/MetaTransit');
 const MetaSecurity = require('evado/component/meta/MetaSecurity');
+const Response = require('areto/web/Response');
