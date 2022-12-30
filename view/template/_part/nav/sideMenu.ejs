@@ -1,7 +1,7 @@
 <!-- report/_part/nav/sideMenu -->
 <div class="nav-tree" data-jam="LoadableNavTree"
-     data-url="report/service/nav">
-    <% if (forbiddenAccess[section.id] !== true) { %>
-    <%- include(_view.get('_part/nav/sideMenuItems'), {items: section.children}) %>
-    <% } %>
+   data-url="report/service/nav">
+  <% if (forbiddenAccess[section.id] !== true) { %>
+  <%- include(_view.get('_part/nav/sideMenuItems'), {items: section.children}) %>
+  <% } %>
 </div>

@@ -1,15 +1,14 @@
 <!-- report/_part/list/tools -->
-
 <span class="list-tools">
-    <% for (const tool of tools) {
-       if (typeof tool === 'object') { %>
-        <button type="button" class="btn <%- tool.css %>" title="<%- tool.title %>"
-            data-handler="<%- tool.handler %>"
-            data-url="<%- _url(tool.url) %>" >
-            <%- tool.label %>
-        </button>
-    <% } else { %>
-    <%- tool %>
-    <% }} %>
-    <span class="loader fa fa-spinner fa-spin"></span>
+  <% for (const tool of tools) {
+     if (typeof tool === 'object') { %>
+    <button type="button" class="btn <%- tool.css %>" title="<%- tool.title %>"
+      data-handler="<%- tool.handler %>"
+      data-url="<%- _url(tool.url) %>" >
+      <%- tool.label %>
+    </button>
+  <% } else { %>
+  <%- tool %>
+  <% }} %>
+  <span class="loader fa fa-spinner fa-spin"></span>
 </span>

@@ -1,58 +1,58 @@
 <!-- report/_part/list/sort -->
 <%
 data = {
-    key: meta.class.getKey(),
-    multiple: true,
-    columns: extraData.columns,
-    url: _controller.getOriginalUrl(),
-    update: `office/model/update?c=${meta.class.id}`,
-    showTop: true,
-    ...data
+  key: meta.class.getKey(),
+  multiple: true,
+  columns: extraData.columns,
+  url: _controller.getOriginalUrl(),
+  update: `office/model/update?c=${meta.class.id}`,
+  showTop: true,
+  ...data
 };
 %>
 <div class="frame-box scroll-container" data-title="<%= blocks.title %>">
-    <div class="frame-box-header scroll-header">
-        <div class="commands">
-            <button data-command="saveClose" class="btn-primary btn" type="button" title="Save and close">
-                <i class="fas fa-check"></i>
-            </button>
-            <div class="nav-group">
-                <button data-command="up" class="btn-outline-success btn" type="button">
-                    <i class="fas fa-arrow-up"></i>
-                </button>
-                <button data-command="down" class="btn-outline-success btn" type="button">
-                    <i class="fas fa-arrow-down"></i>
-                </button>
-            </div>
-            <% if (data.view) { %>
-            <button data-command="view" class="btn-outline-secondary btn" type="button" title="View">
-                <i class="far fa-eye"></i>
-            </button>
-            <% } %>
-            <% if (data.update && security.access.canUpdate()) { %>
-            <button data-command="update" class="btn-outline-primary btn" type="button" title="Update">
-                <i class="fas fa-pencil-alt"></i>
-            </button>
-            <% } %>
-            <div class="nav-group">
-                <button data-command="reload" class="btn-outline-secondary btn" type="button" title="Reload">
-                    <i class="fa fa-redo-alt"></i>
-                </button>
-            </div>
-        </div>
+  <div class="frame-box-header scroll-header">
+    <div class="commands">
+      <button data-command="saveClose" class="btn-primary btn" type="button" title="Save and close">
+        <i class="fas fa-check"></i>
+      </button>
+      <div class="nav-group">
+        <button data-command="up" class="btn-outline-success btn" type="button">
+          <i class="fas fa-arrow-up"></i>
+        </button>
+        <button data-command="down" class="btn-outline-success btn" type="button">
+          <i class="fas fa-arrow-down"></i>
+        </button>
+      </div>
+      <% if (data.view) { %>
+      <button data-command="view" class="btn-outline-secondary btn" type="button" title="View">
+        <i class="far fa-eye"></i>
+      </button>
+      <% } %>
+      <% if (data.update && security.access.canUpdate()) { %>
+      <button data-command="update" class="btn-outline-primary btn" type="button" title="Update">
+        <i class="fas fa-pencil-alt"></i>
+      </button>
+      <% } %>
+      <div class="nav-group">
+        <button data-command="reload" class="btn-outline-secondary btn" type="button" title="Reload">
+          <i class="fa fa-redo-alt"></i>
+        </button>
+      </div>
     </div>
-    <div class="frame-box-body scroll-body">
-        <div class="data-grid" data-params="<%= JSON.stringify(data) %>">
-            <% if (data.showTop) { %>
-            <%- include(_view.get('_part/list/top')) %>
-            <% } %>
-            <div class="data-grid-content"></div>
+  </div>
+  <div class="frame-box-body scroll-body">
+    <div class="data-grid" data-params="<%= JSON.stringify(data) %>">
+      <% if (data.showTop) { %>
+      <%- include(_view.get('_part/list/top')) %>
+      <% } %>
+      <div class="data-grid-content"></div>
 
-            <%- include(_view.get('_part/list/bottom')) %>
+      <%- include(_view.get('_part/list/bottom')) %>
 
-            <div class="overlay">
-                <i class="fa fa-spinner fa-spin"></i>
-            </div>
-        </div>
+      <div class="overlay">
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
     </div>
+  </div>
 </div>

@@ -3,38 +3,40 @@ layout(_view.get(_layout));
 block('title', 'Update report');
 
 const {userUpdateUrl} = _module.params;
+const columnTemplate = _view.get('_part/group/columns');
+const staticTemplate = _view.get('_part/attr/static');
 %>
 
-<%- include(_view.get('_part/group/columns'), {
-    items: [{
-        template: _view.get('_part/attr/static'),
-        params: {
-            attr: 'state',
-            format: 'label'
-        }
-    },{
-        template: _view.get('_part/attr/static'),
-        params: {
-            attr: 'report'
-        }
-    }]
+<%- include(columnTemplate, {
+  items: [{
+    template: staticTemplate,
+    params: {
+      attr: 'state',
+      format: 'label'
+    }
+  },{
+    template: staticTemplate,
+    params: {
+      attr: 'report'
+    }
+  }]
 }) %>
 
 <%- include(_view.getInternalTemplate('_form')) %>
 
-<%- include(_view.get('_part/group/columns'), {
-    items: [{
-        template: _view.get('_part/attr/static'),
-        params: {
-            attr: 'createdAt',
-            format: 'timestamp'
-        }
-    },{
-        template: _view.get('_part/attr/static'),
-        params: {
-            attr: 'creator',
-            value: model.get('creator.name'),
-            url: userUpdateUrl ? _url(userUpdateUrl) + model.get('creator') : null
-        }
-    }]
+<%- include(columnTemplate, {
+  items: [{
+    template: staticTemplate,
+    params: {
+      attr: 'createdAt',
+      format: 'timestamp'
+    }
+  },{
+    template: staticTemplate,
+    params: {
+      attr: 'creator',
+      value: model.get('creator.name'),
+      url: userUpdateUrl ? _url(userUpdateUrl) + model.get('creator') : null
+    }
+  }]
 }) %>

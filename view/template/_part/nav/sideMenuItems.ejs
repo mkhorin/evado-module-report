@@ -1,10 +1,10 @@
 <%
 for (const item of items) {
-    if (forbiddenAccess[item.id] === true) {
-        continue;
-    }
-    let translation = item.isSystem() ? 'null' : `meta.${item.translationKey}`;
-    let css = item.options.css || '';
+  if (forbiddenAccess[item.id] === true) {
+    continue;
+  }
+  let translation = item.isSystem() ? 'null' : `meta.${item.translationKey}`;
+  let css = item.options.css || '';
 if (item.isDivider()) {
 %>
 <div class="nav-divider"></div>
@@ -12,36 +12,36 @@ if (item.isDivider()) {
 <div class="nav-header <%- css %>" data-t="<%- translation %>"><%= item.label %></div>
 <%
 } else {
-    if (item.children) {
-        css += ' tree';
-    }
-    const opened = item.data.opened || item === activeItem || openedItems.includes(item);
-    if (opened) {
-        css += ' loaded open';
-    }
-    if (item === activeItem) {
-        css += ' active';
-    }
+  if (item.children) {
+    css += ' tree';
+  }
+  const opened = item.data.opened || item === activeItem || openedItems.includes(item);
+  if (opened) {
+    css += ' loaded open';
+  }
+  if (item === activeItem) {
+    css += ' active';
+  }
 %>
 <div class="nav-item <%- css %>" data-id="<%- item.id %>">
-    <% if (item.children) { %>
-    <a href="<%- item.isContainer() ? '' : _widget.getItemUrl(item) %>" class="nav-link">
-        <span data-t="<%- translation %>"><%= item.label %></span>
-        <span class="arrow fa fa-angle-left"></span>
-    </a>
-    <div class="nav-children">
-        <% if (opened) { %>
-        <%- include('sideMenuItems', {items: item.children}) %>
-        <% } else { %>
-        <div class="nav-item-loader">
-            <i class="fa fa-spinner fa-spin"></i>
-        </div>
-        <% } %>
+  <% if (item.children) { %>
+  <a href="<%- item.isContainer() ? '' : _widget.getItemUrl(item) %>" class="nav-link">
+    <span data-t="<%- translation %>"><%= item.label %></span>
+    <span class="arrow fa fa-angle-left"></span>
+  </a>
+  <div class="nav-children">
+    <% if (opened) { %>
+    <%- include('sideMenuItems', {items: item.children}) %>
+    <% } else { %>
+    <div class="nav-item-loader">
+      <i class="fa fa-spinner fa-spin"></i>
     </div>
-    <% } else if (!item.isContainer()) { %>
-    <a href="<%- _widget.getItemUrl(item) %>" class="nav-link">
-        <span data-t="<%- translation %>"><%= item.label %></span>
-    </a>
-    <% }%>
+    <% } %>
+  </div>
+  <% } else if (!item.isContainer()) { %>
+  <a href="<%- _widget.getItemUrl(item) %>" class="nav-link">
+    <span data-t="<%- translation %>"><%= item.label %></span>
+  </a>
+  <% }%>
 </div>
 <% }} %>

@@ -5,45 +5,45 @@ block('title', meta.report.getTitle());
 %>
 
 <div data-jam="ReportMain">
-    <%- include(_view.get('_part/misc/tabs'), {
-        items: [{
-            id: 'instances',
-            label: 'Instances',
-            active: true,
-            content: {
-                template: _view.get('_part/list/grid'),
-                data: {
-                    columns: [{
-                        name: 'state',
-                        format: 'label'
-                    }, {
-                        name: 'createdAt',
-                        format: 'timestamp',
-                        sortable: true
-                    }, {
-                        name: 'name'
-                    }, {
-                        name: 'label'
-                    }, {
-                        name: 'creator'
-                    }, {
-                        name: 'stateCode',
-                        hidden: true
-                    }],
-                    order: {createdAt: -1},
-                    list: ['list', {n: meta.node.id}],
-                    create: ['create', {n: meta.node.id}],
-                    update: ['update', {n: meta.node.id}],
-                    index: null
-                },
-                tools: [{
-                    template: _view.get('_part/tool/showReport')
-                }]
-            }
+  <%- include(_view.get('_part/misc/tabs'), {
+    items: [{
+      id: 'instances',
+      label: 'Instances',
+      active: true,
+      content: {
+        template: _view.get('_part/list/grid'),
+        data: {
+          columns: [{
+            name: 'state',
+            format: 'label'
+          }, {
+            name: 'createdAt',
+            format: 'timestamp',
+            sortable: true
+          }, {
+            name: 'name'
+          }, {
+            name: 'label'
+          }, {
+            name: 'creator'
+          }, {
+            name: 'stateCode',
+            hidden: true
+          }],
+          order: {createdAt: -1},
+          list: ['list', {n: meta.node.id}],
+          create: ['create', {n: meta.node.id}],
+          update: ['update', {n: meta.node.id}],
+          index: null
+        },
+        tools: [{
+          template: _view.get('_part/tool/showReport')
         }]
-    }) %>
+      }
+    }]
+  }) %>
 
-    <template data-id="report">
-        <%- include(_view.get('_meta/list/grid'), {data: {}}) %>
-    </template>
+  <template data-id="report">
+    <%- include(_view.get('_meta/list/grid'), {data: {}}) %>
+  </template>
 </div>

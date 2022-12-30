@@ -2,8 +2,8 @@
 <%
 const extraData = extraMeta.getData(meta.view);
 const data = {
-    columns: extraData.filterColumns,
-    types: {selector: {url: 'report/model/list-filter-select'}}
+  columns: extraData.filterColumns,
+  types: {selector: {url: 'report/model/list-filter-select'}}
 };
 %>
 <%- include(_view.get('_part/list/filterContent'), {data: p}) %>
