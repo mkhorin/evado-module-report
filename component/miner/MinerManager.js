@@ -27,7 +27,7 @@ module.exports = class MinerManager extends Base {
     }
 
     createMiner (model) {
-        const module = this.module;
+        const {module} = this;
         const miner = model.getMetaReport().createMiner({model, module});
         this._miners.set(model.getId(), miner);
         return miner;

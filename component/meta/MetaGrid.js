@@ -36,7 +36,7 @@ module.exports = class MetaGrid extends Base {
     }
 
     setOrder () {
-        const order = this.request.order;
+        const {order} = this.request;
         if (!order) {
             return false;
         }
@@ -99,7 +99,7 @@ module.exports = class MetaGrid extends Base {
     }
 
     async renderCell (attr, model, result) {
-        const name = attr.name;
+        const {name} = attr;
         const template = this._attrTemplateMap[name];
         if (!template) {
             return result[name] = this.renderAttr(name, attr, model);

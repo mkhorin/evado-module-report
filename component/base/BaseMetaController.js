@@ -37,25 +37,25 @@ module.exports = class BaseMetaController extends Base {
 
     setMetaParams (params = {}) {
         const {c} = this.getQueryParams();
-        const data = this.meta;
-        data.class = this.baseMeta.getClass(params.source || c);
-        if (!data.class) {
+        const {meta} = this;
+        meta.class = this.baseMeta.getClass(params.source || c);
+        if (!meta.class) {
             throw new BadRequest('Meta class not found');
         }
-        data.view = data.class.getViewWithPrefix(this.module.name, params.viewName) || data.class;
+        meta.view = meta.class.getViewWithPrefix(this.module.name, params.viewName) || meta.class;
         return this.setMasterMetaParams();
     }
 
     setAttrMetaParams (param) {
         const [attrName, viewName, className] = String(param).split('.');
-        const data = this.meta;
-        data.class = this.baseMeta.getClass(className);
-        if (!data.class) {
+        const {meta} = this;
+        meta.class = this.baseMeta.getClass(className);
+        if (!meta.class) {
             throw new BadRequest(`Meta class not found: ${param}`);
         }
-        data.view = data.class.getViewWithPrefix(this.module.name, viewName) || data.class;
-        data.attr = data.view.getAttr(attrName);
-        if (!data.attr) {
+        meta.view = meta.class.getViewWithPrefix(this.module.name, viewName) || meta.class;
+        meta.attr = meta.view.getAttr(attrName);
+        if (!meta.attr) {
             throw new BadRequest(`Meta attribute not found: ${param}`);
         }
     }
@@ -68,7 +68,7 @@ module.exports = class BaseMetaController extends Base {
             return null;
         }
         const [attrName, id, className] = String(data).split('.');
-        const master = this.meta.master;
+        const {master} = this.meta;
         master.class = this.baseMeta.getClass(className);
         if (!master.class) {
             throw new BadRequest(`Master class not found: ${data}`);
@@ -78,7 +78,7 @@ module.exports = class BaseMetaController extends Base {
         if (!master.attr) {
             throw new BadRequest(`Master attribute not found: ${data}`);
         }
-        if (!this.meta.master.attr.relation) {
+        if (!master.attr.relation) {
             throw new BadRequest(`Invalid master relation: ${data}`);
         }
         const config = this.getSpawnConfig();
